@@ -56,6 +56,11 @@
 <button type="submit" id="rw-submit" class="rw-google-button">Conectare</button>
 </form>
 <button type="button" id="rw-forgot" class="rw-text-button">Am uitat parola</button>
+<form id="rw-recovery-form" class="rw-auth-form" hidden>
+<div class="rw-field"><label for="rw-new-password">Parola nouă</label><input id="rw-new-password" type="password" autocomplete="new-password" minlength="12" required placeholder="Minimum 12 caractere"></div>
+<div class="rw-field"><label for="rw-new-password-confirm">Confirmă parola nouă</label><input id="rw-new-password-confirm" type="password" autocomplete="new-password" minlength="12" required placeholder="Repetă parola nouă"></div>
+<button id="rw-recovery-submit" class="rw-google-button" type="submit">Salvează parola nouă</button>
+</form>
 <p id="rw-auth-message" class="rw-auth-message" role="status" aria-live="polite"></p>
 </div></dialog><dialog id="rw-admin-dialog" class="rw-login-dialog rw-admin-dialog" aria-labelledby="rw-admin-title">
 <div class="rw-dialog-inner"><button type="button" id="rw-admin-close" class="rw-close" aria-label="Închide">×</button>

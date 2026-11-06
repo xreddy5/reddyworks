@@ -33,6 +33,8 @@
   const msg = $('rw-auth-message');
   const siteKey = '0x4AAAAAAF2k_ndCSkTda4QR'; // cheie PUBLICA Cloudflare
   let mode = 'login', widgetId = null, busy = false;
+  let recovering = false;
+  const recoveryRedirect = 'https://xreddy5.github.io/reddyworks/';
   let roleRequest = 0;
   let currentStaffRole = null;
   let memberSearchRequest = 0;
@@ -44,7 +46,7 @@
     if ($('rw-login')) $('rw-login').hidden = !!user;
     if ($('rw-user')) $('rw-user').hidden = !user;
     if ($('rw-username')) $('rw-username').textContent = user ? (user.user_metadata?.username || user.email?.split('@')[0] || 'Contul meu') : '';
-    if (user && dialog?.open) dialog.close();
+    if (user && dialog?.open && !recovering) dialog.close();
     updateStaffUI(user);
   }
   async function updateStaffUI(user) {
@@ -187,7 +189,52 @@
     $('rw-tab-register').setAttribute('aria-pressed', String(register));
     resetCaptcha();
   }
+  function showRecoveryForm() {
+    recovering = true;
+    $('rw-auth-form').hidden = true;
+    document.querySelector('.rw-auth-tabs').hidden = true;
+    $('rw-forgot').hidden = true;
+    $('rw-recovery-form').hidden = false;
+    $('rw-dialog-title').textContent = 'Alege o parolă nouă';
+    $('rw-dialog-subtitle').textContent = 'Introdu o parolă nouă pentru contul tău ReddyWorks.';
+    status('Linkul de recuperare a fost confirmat.');
+    if (!dialog.open) dialog.showModal();
+  }
+  function leaveRecoveryForm() {
+    recovering = false;
+    $('rw-auth-form').hidden = false;
+    document.querySelector('.rw-auth-tabs').hidden = false;
+    $('rw-recovery-form').hidden = true;
+    setMode('login');
+  }
+  $('rw-recovery-form')?.addEventListener('submit', async e => {
+    e.preventDefault();
+    if (!recovering || busy || !client) return;
+    const password = $('rw-new-password').value;
+    if (password.length < 12) return status('Parola trebuie să aibă minimum 12 caractere.');
+    if (password !== $('rw-new-password-confirm').value) return status('Parolele nu coincid.');
+    busy = true;
+    $('rw-recovery-submit').disabled = true;
+    status('Se salvează parola nouă…');
+    try {
+      const { error } = await client.auth.updateUser({ password });
+      if (error) throw error;
+      $('rw-new-password').value = '';
+      $('rw-new-password-confirm').value = '';
+      leaveRecoveryForm();
+      status('Parola a fost schimbată! Acum te poți conecta cu parola nouă.');
+      // Eliminam tokenurile din adresa fara sa le afisam sau sa le salvam.
+      window.history.replaceState(null, '', window.location.pathname);
+    } catch (error) {
+      console.error('ReddyWorks password update:', error.message);
+      status('Parola nu a putut fi schimbată. Linkul poate fi expirat; solicită unul nou.');
+    } finally {
+      busy = false;
+      $('rw-recovery-submit').disabled = false;
+    }
+  });
   $('rw-login')?.addEventListener('click', () => {
+    if (recovering) return showRecoveryForm();
     setMode('login');
     dialog?.showModal();
     if (!client) status('Verifică cheia publică din auth-config.js.');
@@ -237,9 +284,10 @@
     if (!captchaToken) return status('Completează verificarea de securitate.');
     try {
       const {error} = await client.auth.resetPasswordForEmail(email, {
-        redirectTo: 'https://xreddy5.github.io/reddyworks/', captchaToken
+        redirectTo: recoveryRedirect, captchaToken
       });
-      status(error ? 'Cererea nu a reușit. Încearcă din nou.' : 'Dacă adresa există, vei primi un email de recuperare.');
+      if (error) console.error('ReddyWorks reset request:', error.message, error.status);
+      status(error ? (error.status === 429 ? 'Prea multe cereri de email. Așteaptă înainte să încerci din nou.' : 'Cererea nu a reușit. Verifică setările de email din Supabase.') : 'Dacă adresa există, vei primi un email de recuperare.');
     } catch { status('A apărut o problemă de conexiune.'); }
     finally { resetCaptcha(); }
   });
@@ -249,10 +297,13 @@
     if (error) status('Deconectarea nu a reușit.'); else render(null);
   });
   if (!client) { render(null); return; }
-  client.auth.onAuthStateChange((_event, session) => render(session));
+  client.auth.onAuthStateChange((event, session) => {
+    if (event === 'PASSWORD_RECOVERY') { showRecoveryForm(); return; }
+    render(session);
+  });
   client.auth.getSession().then(({data,error}) => {
     if (error) { console.error('ReddyWorks auth:',error.message); render(null); }
     else render(data.session);
   }).catch(() => render(null));
-  // Recuperarea parolei necesită o pagină separată pentru introducerea parolei noi.
+  // Recuperarea parolei este gestionata in dialog prin evenimentul PASSWORD_RECOVERY.
 })();

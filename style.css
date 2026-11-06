@@ -286,3 +286,7 @@ footer{padding:42px 7%;border-top:1px solid var(--line);text-align:center;color:
 
 /* Permisiuni roluri – optiunea Administrator ascunsa pentru non-Founder */
 #rw-staff-role option[hidden]{display:none}
+
+/* Recuperare parola ReddyWorks */
+#rw-recovery-form{margin-top:18px}
+#rw-recovery-form[hidden],#rw-auth-form[hidden],.rw-auth-tabs[hidden]{display:none!important}

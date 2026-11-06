@@ -184,3 +184,105 @@ footer{padding:42px 7%;border-top:1px solid var(--line);text-align:center;color:
   .developer-hero h1,
   .developer-hero p{grid-column:1;grid-row:auto}
 }
+
+
+/* ===== REDDYWORKS AUTH – LOGIN UI ===== */
+[hidden] { display: none !important; }
+.rw-auth-area { display:flex; align-items:center; justify-content:flex-end; margin-left:18px; }
+.rw-auth-button { appearance:none; border:1px solid #6fa963; background:#18251b; color:#f7f5ef; border-radius:10px; padding:10px 17px; font:700 13px Arial,Helvetica,sans-serif; cursor:pointer; transition:background .2s,border-color .2s; white-space:nowrap; }
+.rw-auth-button:hover { background:#28402b; border-color:#9bd889; }
+.rw-user { display:flex; align-items:center; gap:12px; }
+#rw-username { color:#e5dcc9; font-size:13px; font-weight:700; max-width:180px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.rw-login-dialog { position:fixed; inset:0; margin:auto; width:min(430px,calc(100% - 32px)); max-height:calc(100dvh - 32px); overflow:auto; padding:0; border:1px solid #456149; border-radius:20px; background:#121a15; color:#f7f5ef; box-shadow:0 28px 80px rgba(0,0,0,.65); }
+.rw-login-dialog:not([open]) { display:none; }
+.rw-login-dialog::backdrop { background:rgba(0,0,0,.76); backdrop-filter:blur(5px); }
+.rw-dialog-inner { position:relative; padding:38px 30px 30px; text-align:center; }
+.rw-dialog-inner h2 { color:#f3eddf; font-size:25px; line-height:1.25; margin:0 28px 12px; }
+.rw-dialog-inner > p { color:#b9c6bc; font-size:14px; line-height:1.6; margin:0 0 22px; }
+.rw-close { position:absolute; top:12px; right:14px; display:grid; place-items:center; width:35px; height:35px; border:1px solid #34473a; border-radius:50%; background:#1b2a20; color:#f3eddf; font-size:24px; cursor:pointer; }
+.rw-close:hover { background:#314737; }
+.rw-google-button { width:100%; padding:14px 18px; border:1px solid #b3c5b3; border-radius:11px; background:#f3eddf; color:#152219; font:800 15px Arial,Helvetica,sans-serif; cursor:pointer; }
+.rw-google-button:hover { background:#e3f0db; }
+.rw-auth-message { min-height:1.3em; margin-top:15px !important; margin-bottom:0 !important; color:#d7e9ce !important; font-size:13px !important; }
+@media(max-width:850px) { .header { flex-wrap:wrap; gap:10px; } .rw-auth-area { margin-left:auto; } }
+@media(max-width:650px) { .rw-auth-area { margin:0 auto; } .rw-dialog-inner { padding:36px 22px 26px; } .rw-dialog-inner h2 { font-size:22px; } }
+
+/* ReddyWorks - Afisare cont conectat */
+
+.rw-auth-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.rw-user:not([hidden]) {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.rw-username {
+    color: #9bd889;
+    font-weight: 700;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+/* Cont ReddyWorks - prioritate afisare */
+#rw-user:not([hidden]) { display:flex !important; align-items:center; gap:12px; }
+#rw-user[hidden], #rw-login[hidden] { display:none !important; }
+#rw-username { color:#9bd889; }
+
+/* ReddyWorks - autentificare email si parola */
+.rw-auth-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 20px}
+.rw-tab{padding:11px 7px;border:1px solid #34473a;border-radius:9px;background:#19251d;color:#c2d1c4;font-weight:700;cursor:pointer}
+.rw-tab.active{background:#8fcf80;color:#102017;border-color:#8fcf80}
+.rw-auth-form{text-align:left;display:grid;gap:14px}
+.rw-field{display:grid;gap:6px}
+.rw-field label{font-size:13px;font-weight:700;color:#e8eee7}
+.rw-field input{width:100%;padding:12px 13px;border-radius:9px;border:1px solid #49614e;background:#0c140f;color:#fff;font-size:15px}
+.rw-field input:focus{outline:2px solid #9bd889;outline-offset:1px}
+.rw-field[hidden]{display:none!important}
+.rw-captcha{min-height:65px;display:flex;justify-content:center;align-items:center;overflow:hidden}
+.rw-text-button{margin-top:15px;background:none;border:0;color:#9bd889;cursor:pointer;text-decoration:underline;font-size:13px}
+.rw-google-button:disabled{opacity:.6;cursor:wait}
+#rw-username{color:#9bd889}
+
+/* ReddyWorks Admin */
+.rw-role-badge{display:inline-flex;align-items:center;padding:5px 9px;border:1px solid #9d8545;border-radius:99px;background:#29251a;color:#f3d985;font-size:12px;font-weight:800;white-space:nowrap}
+.rw-admin-dialog{width:min(490px,calc(100% - 32px))}
+.rw-admin-help{color:#b9c6bc;font-size:13px;text-align:left;margin-bottom:16px}
+.rw-admin-dialog .rw-field select{width:100%;padding:12px 13px;border:1px solid #49614e;border-radius:9px;background:#0c140f;color:white;font-size:15px}
+.rw-admin-dialog .rw-auth-form{margin-top:12px}
+@media(max-width:850px){.rw-user{flex-wrap:wrap;justify-content:center}}
+
+
+/* ReddyWorks - contor public comunitate */
+.rw-community-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;max-width:780px;margin:0 0 12px}
+.rw-community-stat{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;min-height:155px;padding:24px 16px;border:1px solid #38513f;border-radius:18px;background:linear-gradient(145deg,#19251d,#111a14);text-align:center}
+.rw-community-stat-icon{font-size:25px}
+.rw-community-stat strong{color:var(--green);font-size:38px;line-height:1.15;font-weight:900;font-variant-numeric:tabular-nums}
+.rw-community-stat>span:last-child{color:var(--cream2);font-size:13px;font-weight:700}
+.rw-community-status{min-height:18px;margin:0 0 24px;color:var(--muted);font-size:12px}
+@media(max-width:650px){.rw-community-stats{grid-template-columns:1fr;gap:12px}.rw-community-stat{min-height:135px}}
+
+/* ReddyWorks Admin - lista membrilor */
+.rw-admin-dialog{width:min(620px,calc(100% - 28px))}
+.rw-search-field{text-align:left;margin:15px 0 10px}
+.rw-search-field input{width:100%;padding:12px;border-radius:9px;border:1px solid #49614e;background:#0c140f;color:#fff;font-size:15px}
+.rw-member-list{display:grid;gap:9px;max-height:280px;overflow-y:auto;margin:12px 0 20px;text-align:left}
+.rw-member-item{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px;border:1px solid #34473a;border-radius:12px;background:#19251d}
+.rw-member-details{display:grid;gap:2px;min-width:0;overflow-wrap:anywhere}
+.rw-member-details strong{color:#f3eddf;font-size:14px}
+.rw-member-details span{color:#aeb8b0;font-size:12px}
+.rw-member-protected{color:#f3d985;font-size:12px;font-weight:700}
+.rw-member-choose{border:1px solid #78b86b;border-radius:8px;background:#28402b;color:#f3eddf;padding:9px 12px;font-weight:700;cursor:pointer}
+.rw-member-choose:hover{background:#365a3b}
+#rw-founder-tools{border-top:1px solid #34473a;padding-top:17px}
+#rw-staff-selected{opacity:.85}
+#rw-staff-submit:disabled{opacity:.5;cursor:not-allowed}
+
+/* Permisiuni roluri – optiunea Administrator ascunsa pentru non-Founder */
+#rw-staff-role option[hidden]{display:none}

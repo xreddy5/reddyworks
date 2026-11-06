@@ -3,7 +3,7 @@
 <a class="logo brand-logo-link" href="index.html"><img src="reddyworks-logo.png" alt="ReddyWorks"><span class="brand-word">Reddy<span>Works</span></span></a>
 <nav class="menu">
 <a href="index.html">Acasă</a><a href="projects.html">Proiecte</a><a href="developer.html">Developer</a><a href="index.html#comunitate">Comunitate</a>
-</nav></header>
+</nav><div class="rw-auth-area"><button type="button" id="rw-login" class="rw-auth-button">Conectare / Creează cont</button><div id="rw-user" class="rw-user" hidden><span id="rw-username"></span><span id="rw-role-badge" class="rw-role-badge" hidden></span><button type="button" id="rw-admin-open" class="rw-auth-button" hidden>Administrare</button><button type="button" id="rw-logout" class="rw-auth-button">Ieșire</button></div></div></header>
 <main>
 <section class="hero"><div class="hero-content"><img class="hero-brand-logo" src="reddyworks-logo.png" alt="ReddyWorks logo"><div class="eyebrow">● REDDYWORKS • MODDING & DEVELOPMENT</div><h1>Construim.<br><span>Modificăm.</span><br>Creăm.</h1><p>ReddyWorks este locul proiectelor dezvoltate de xReDDy pentru jocuri. Farming Simulator 25, Rust și FiveM sunt cele trei direcții principale ale platformei.</p><div class="actions"><a class="btn btn-primary" href="projects.html">VEZI PROIECTELE →</a><a class="btn btn-secondary" href="#jocuri">ALEGE JOCUL</a></div><div class="stats"><div class="stat"><strong>3</strong><span>JOCURI</span></div><div class="stat"><strong>1</strong><span>PROIECT ACTIV</span></div><div class="stat"><strong>RW</strong><span>CREAT DE xReDDy</span></div></div></div></section>
 <section class="section soft" id="jocuri"><div class="section-head"><small>JOCURI</small><h2>Trei lumi. Un singur brand.</h2><p>Intră direct în zona jocului care te interesează.</p></div><div class="game-grid">
@@ -27,10 +27,51 @@
     </div>
   </div>
 </section>
-<section class="section soft" id="comunitate"><div class="section-head"><small>COMUNITATE</small><h2>Urmărește ReddyWorks</h2><p>Preview-uri, noutăți și discuții despre proiecte.</p></div><div class="community-grid">
+<section class="section soft" id="comunitate"><div class="section-head"><small>COMUNITATE</small><h2>Urmărește ReddyWorks</h2><p>Preview-uri, noutăți și discuții despre proiecte.</p></div>
+<div class="rw-community-stats" aria-label="Statisticile comunității ReddyWorks">
+  <div class="rw-community-stat"><span class="rw-community-stat-icon" aria-hidden="true">👥</span><strong id="rw-total-members" aria-live="polite">—</strong><span>Total membri</span></div>
+  <div class="rw-community-stat"><span class="rw-community-stat-icon" aria-hidden="true">🌱</span><strong id="rw-new-members" aria-live="polite">—</strong><span>Membri noi în ultimele 7 zile</span></div>
+</div>
+<p id="rw-community-status" class="rw-community-status" role="status" aria-live="polite">Se încarcă statisticile comunității…</p>
+<div class="community-grid">
 <a class="community-card" href="https://discord.gg/2gvbgjCmsJ" target="_blank"><div class="ico">💬</div><h3>Discord</h3><p>ReddyWorks Community</p></a>
 <a class="community-card" href="https://youtube.com/@xreddy0" target="_blank"><div class="ico">▶️</div><h3>YouTube</h3><p>@xreddy0</p></a>
 <a class="community-card" href="https://www.instagram.com/reddy_works/" target="_blank"><div class="ico">📸</div><h3>Instagram</h3><p>@reddy_works</p></a>
 </div></section>
-</main><footer><a class="logo" href="index.html">Reddy<span>Works</span></a>
-<p>Mods • Plugins • Projects</p><p>© 2026 ReddyWorks • Developed by xReDDy</p></footer></body></html>
+</main><dialog id="rw-login-dialog" class="rw-login-dialog" aria-labelledby="rw-dialog-title">
+<div class="rw-dialog-inner">
+<button type="button" id="rw-close" class="rw-close" aria-label="Închide">×</button>
+<h2 id="rw-dialog-title">Conectare ReddyWorks</h2>
+<p id="rw-dialog-subtitle">Intră în contul tău ReddyWorks.</p>
+<div class="rw-auth-tabs" role="group" aria-label="Tip autentificare">
+<button type="button" id="rw-tab-login" class="rw-tab active" aria-pressed="true">Conectare</button>
+<button type="button" id="rw-tab-register" class="rw-tab" aria-pressed="false">Creează cont</button>
+</div>
+<form id="rw-auth-form" class="rw-auth-form">
+<div id="rw-name-row" class="rw-field" hidden><label for="rw-name">Nume utilizator</label><input id="rw-name" name="username" autocomplete="username" minlength="3" maxlength="24" pattern="[A-Za-z0-9_]+" placeholder="Ex: xReDDy"></div>
+<div class="rw-field"><label for="rw-email">Email</label><input id="rw-email" name="email" type="email" autocomplete="email" required placeholder="nume@email.com"></div>
+<div class="rw-field"><label for="rw-password">Parolă</label><input id="rw-password" name="password" type="password" autocomplete="current-password" required minlength="12" placeholder="Minimum 12 caractere"></div>
+<div id="rw-confirm-row" class="rw-field" hidden><label for="rw-confirm">Confirmă parola</label><input id="rw-confirm" name="confirm" type="password" autocomplete="new-password" placeholder="Repetă parola"></div>
+<div id="rw-captcha" class="rw-captcha"></div>
+<button type="submit" id="rw-submit" class="rw-google-button">Conectare</button>
+</form>
+<button type="button" id="rw-forgot" class="rw-text-button">Am uitat parola</button>
+<p id="rw-auth-message" class="rw-auth-message" role="status" aria-live="polite"></p>
+</div></dialog><dialog id="rw-admin-dialog" class="rw-login-dialog rw-admin-dialog" aria-labelledby="rw-admin-title">
+<div class="rw-dialog-inner"><button type="button" id="rw-admin-close" class="rw-close" aria-label="Închide">×</button>
+<h2 id="rw-admin-title">ReddyWorks Admin</h2><p id="rw-admin-description">Administrarea echipei ReddyWorks</p>
+<div id="rw-member-tools" hidden>
+<div class="rw-field rw-search-field"><label for="rw-member-search">Caută membru după nume</label><input id="rw-member-search" type="search" maxlength="50" placeholder="Ex: ReddyTest" autocomplete="off"></div>
+<p id="rw-member-status" class="rw-admin-help" role="status">Se încarcă membrii…</p>
+<div id="rw-member-list" class="rw-member-list" aria-label="Lista membrilor"></div>
+</div>
+<div id="rw-founder-tools" hidden>
+<p class="rw-admin-help">Selectează un membru pentru a-i modifica rolul. Administratorii pot gestiona doar Moderatorii.</p>
+<form id="rw-staff-form" class="rw-auth-form">
+<input id="rw-staff-id" type="hidden" required>
+<div class="rw-field"><label for="rw-staff-selected">Membru selectat</label><input id="rw-staff-selected" type="text" readonly placeholder="Selectează un membru din listă"></div>
+<div class="rw-field"><label for="rw-staff-role">Acțiune</label><select id="rw-staff-role" required><option value="moderator">Promovează la Moderator</option><option value="admin">Promovează la Administrator</option><option value="remove">Retrage rolul staff</option></select></div>
+<button id="rw-staff-submit" class="rw-google-button" type="submit" disabled>Aplică modificarea</button></form>
+</div><p id="rw-staff-message" class="rw-auth-message" role="status" aria-live="polite"></p>
+</div></dialog><footer><a class="logo" href="index.html">Reddy<span>Works</span></a>
+<p>Mods • Plugins • Projects</p><p>© 2026 ReddyWorks • Developed by xReDDy</p></footer><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script><script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script><script src="auth-config.js" defer></script><script src="script.js" defer></script></body></html>
